@@ -1,0 +1,29 @@
+button {
+  color: var(--fontButtonColor);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-size: 1em;
+  padding: 0.5em;
+  margin: 0;
+  margin-top: var(--marginDefault);
+  margin-left: var(--marginDefault);
+  border: none;
+  width: 100%;
+  right: 0;
+  left: 0;
+}
+button:hover {
+  box-shadow: 0px 0px 2px 1px var(--elementShadow);
+}
+button:active {
+  box-shadow: 0px 0px 0px 0px;
+}
+.danger_button {
+  background-color: var(--dangerBackground);
+}
+.normal_button {
+  background-color: var(--normalBackground);
+}
