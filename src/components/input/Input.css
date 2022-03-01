@@ -1,0 +1,18 @@
+.input {
+  display: flex;
+  text-align: center;
+  border-radius: 0.2em;
+  border: 1px solid rgba(0, 0, 0, 0.397);
+  position: relative;
+  right: 0;
+  left: 0;
+  font-size: 1em;
+  width: 95%;
+  padding: var(--inputFormPadding);
+  margin: 0;
+  margin-top: var(--marginDefault);
+  margin-left: var(--marginDefault);
+}
+.input:focus {
+  outline: 2px solid rgba(104, 193, 252, 0.397);
+}
