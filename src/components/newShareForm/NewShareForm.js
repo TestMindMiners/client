@@ -9,13 +9,15 @@ export default function NewShareForm(props) {
     event.preventDefault();
     const form = event.target;
     const operationValues = {
-      name: form.shareName.value
+      name: form.shareName.value,
     };
     await Api.PostRequest(Api.createShareUrl(), operationValues)
       .catch((error) => console.log(error))
-      .then((result) => {if(result.status===200){
-        props.action("O registro foi concluido com sucesso!");
-      }});
+      .then((result) => {
+        if (result.status === 200) {
+          props.action("O registro foi concluido com sucesso!");
+        }
+      });
   };
   return (
     <>

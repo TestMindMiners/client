@@ -41,12 +41,12 @@ export default function Home() {
   const verifyRange = (operations) => {
     let leftValues = [];
     let topValues = [];
-    
+
     operations.forEach((element) => {
-        leftValues.push(element[0]);
-        topValues.push(element[1]);
+      leftValues.push(element[0]);
+      topValues.push(element[1]);
     });
-    
+
     const highValues = [
       Math.max.apply(null, leftValues),
       Math.max.apply(null, topValues),
@@ -61,16 +61,20 @@ export default function Home() {
     ];
     return diferenceHighLow;
   };
-  const calculatePositions =  (operations) => {
+  const calculatePositions = (operations) => {
     const diferenceHighLow = verifyRange(operations);
     const resultPositions = [];
     operations.forEach((element) => {
-            resultPositions.push([
-                parseInt(((element[0]*100/diferenceHighLow[0]/2)*maxLeft/100)+minLeft/2),
-                parseInt(((100-(element[1]*100/diferenceHighLow[1]))*minTop)/100)
-            ]);
-        
-      });
+      resultPositions.push([
+        parseInt(
+          (((element[0] * 100) / diferenceHighLow[0] / 2) * maxLeft) / 100 +
+            minLeft / 2
+        ),
+        parseInt(
+          ((100 - (element[1] * 100) / diferenceHighLow[1]) * minTop) / 100
+        ),
+      ]);
+    });
     return resultPositions;
   };
 
@@ -83,16 +87,16 @@ export default function Home() {
         name: item.name,
         color: "#ffffff",
         values: operationBySharePositions,
-        positions: tempPositions
+        positions: tempPositions,
       });
     });
     return graphicData;
   };
 
-  const cancelRegister = (event)=>{
+  const cancelRegister = (event) => {
     event.preventDefault();
     getAll();
-  }
+  };
   const openRegisterShare = (event) => {
     event.preventDefault();
     setDataValues({
@@ -100,8 +104,8 @@ export default function Home() {
       view: {
         view: true,
         operation: false,
-      }
-    })
+      },
+    });
   };
   const finishRegister = (showMessage) => {
     getAll(showMessage);
@@ -113,18 +117,16 @@ export default function Home() {
       view: {
         view: true,
         operation: true,
-      }
-    })
+      },
+    });
   };
 
-  const closeMessage = (event)=>{
+  const closeMessage = (event) => {
     event.preventDefault();
-    setDataValues(
-      {
-        ...dataValues,
-        message:null
-      }
-    )
+    setDataValues({
+      ...dataValues,
+      message: null,
+    });
   };
 
   const getAll = async (showMessage) => {
@@ -132,7 +134,7 @@ export default function Home() {
     let operations = await getOperations();
     let share = await getShare();
     let positions = await getOperationsForGraphic(share);
-    if(showMessage){
+    if (showMessage) {
       messageValue = showMessage;
     }
     const tempDataValues = {
@@ -144,7 +146,7 @@ export default function Home() {
         view: false,
         operation: false,
       },
-      message:messageValue
+      message: messageValue,
     };
     setDataValues(tempDataValues);
   };
@@ -155,7 +157,13 @@ export default function Home() {
     <>
       {dataValues ? (
         <section className="page">
-          <CreateGraphic dataValues={dataValues.positions} minTop={minTop} maxTop={maxTop} minLeft={minLeft} maxLeft={maxLeft} />
+          <CreateGraphic
+            dataValues={dataValues.positions}
+            minTop={minTop}
+            maxTop={maxTop}
+            minLeft={minLeft}
+            maxLeft={maxLeft}
+          />
 
           <Table operations={dataValues.operations} />
 
@@ -178,11 +186,11 @@ export default function Home() {
               click={openRegisterOperation}
             />
           </div>
-          {dataValues.message !== null?
-            <MessageBox action={closeMessage} message={dataValues.message}/>
-            :""}
-            
-            
+          {dataValues.message !== null ? (
+            <MessageBox action={closeMessage} message={dataValues.message} />
+          ) : (
+            ""
+          )}
         </section>
       ) : (
         ""

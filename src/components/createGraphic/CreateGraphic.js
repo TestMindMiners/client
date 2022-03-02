@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import Graphic from "../graphic/Graphic";
-import './CreateGraphic.css';
+import "./CreateGraphic.css";
 
 export default function CreateGraphic(props) {
   return (
     <div className="graphic_box">
-      {props.dataValues?
+      {props.dataValues ? (
         <Graphic
           positions={props.dataValues}
           minTop={props.minTop}
@@ -13,7 +13,9 @@ export default function CreateGraphic(props) {
           minLeft={props.minLeft}
           maxLeft={props.maxLeft}
         ></Graphic>
-        :""}
+      ) : (
+        ""
+      )}
     </div>
   );
 }

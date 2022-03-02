@@ -2,7 +2,7 @@
   min-width: 99%;
 }
 .element_title {
-color: var(--fontColor);
+  color: var(--fontColor);
   font-size: 1em;
   font-weight: bold;
 }

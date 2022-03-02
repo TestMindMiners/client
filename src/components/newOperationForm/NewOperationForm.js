@@ -51,52 +51,57 @@ export default function NewOperationForm(props) {
     };
     await Api.PostRequest(Api.createOperationUrl(), operationValues)
       .catch((error) => console.log(error))
-      .then((result) => {if(result.status===200){props.action("O registro foi concluido com sucesso!")}});
+      .then((result) => {
+        if (result.status === 200) {
+          props.action("O registro foi concluido com sucesso!");
+        }
+      });
   };
   useEffect(() => {
     getShares();
   }, []);
   return (
     <>
-      {shares?
-      <Form submit={saveOperation}>
+      {shares ? (
+        <Form submit={saveOperation}>
+          <label className="form_title">{"Nova Operação"}</label>
+          <Input
+            type="date"
+            inputName={"dateOperation"}
+            name={"Data da Operação"}
+          />
+          <Select
+            options={shares}
+            name={"Ação a Fazer Nova Operação"}
+            selectName="shareOperation"
+          />
+          <Select
+            options={options}
+            name={"Tipo de Operação"}
+            selectName="operationType"
+          />
+          <Input type="text" inputName={"sharePrice"} name={"Preço da Ação"} />
+          <Input
+            type="text"
+            inputName={"shareQuantity"}
+            name={"Quantidade de Ações"}
+          />
+          <Input
+            type="text"
+            inputName={"brokerageFee"}
+            name={"Taxa de Corretagem"}
+          />
 
-        <label className="form_title">{"Nova Operação"}</label>
-        <Input
-          type="date"
-          inputName={"dateOperation"}
-          name={"Data da Operação"}
-        />
-        <Select
-          options={shares}
-          name={"Ação a Fazer Nova Operação"}
-          selectName="shareOperation"
-        />
-        <Select
-          options={options}
-          name={"Tipo de Operação"}
-          selectName="operationType"
-        />
-        <Input type="text" inputName={"sharePrice"} name={"Preço da Ação"} />
-        <Input
-          type="text"
-          inputName={"shareQuantity"}
-          name={"Quantidade de Ações"}
-        />
-        <Input
-          type="text"
-          inputName={"brokerageFee"}
-          name={"Taxa de Corretagem"}
-        />
-        
-        <Button buttonText={"Salvar Operação"} buttonName={"normal_button"} />
-        <Button
-          buttonText={"Cancelar Operação"}
-          buttonName={"danger_button"}
-          click={props.cancel}
-        />
-      </Form>
-      :""}
+          <Button buttonText={"Salvar Operação"} buttonName={"normal_button"} />
+          <Button
+            buttonText={"Cancelar Operação"}
+            buttonName={"danger_button"}
+            click={props.cancel}
+          />
+        </Form>
+      ) : (
+        ""
+      )}
     </>
   );
 }

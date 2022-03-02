@@ -1,8 +1,8 @@
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import "./Graphic.css";
 
 export default function Graphic(props) {
-  const [positions,setPositions]=useState();
+  const [positions, setPositions] = useState();
   const drawnArrows = (drawnArea) => {
     const arrowValues = [
       [
@@ -27,9 +27,8 @@ export default function Graphic(props) {
     });
   };
   const drawnLines = (drawnArea) => {
-    if(positions){
+    if (positions) {
       positions.forEach((item) => {
-        
         const haf = [];
         const text = [];
         drawnArea.beginPath();
@@ -64,9 +63,8 @@ export default function Graphic(props) {
     }
   };
   useEffect(() => {
-    
-    const tempPositions = async()=>(await props.positions);
-    console.log(tempPositions().then(result=>result));
+    const tempPositions = async () => await props.positions;
+    console.log(tempPositions().then((result) => result));
     const drawnArea = document.getElementById("graphic").getContext("2d");
     setPositions(props.positions);
     drawnArea.translate(0, 20);
@@ -76,30 +74,29 @@ export default function Graphic(props) {
   }, []);
   return (
     <>
-    <div className="graphic_area">
-      <canvas
-        id="graphic"
-        className="graphic"
-        width={1500}
-        height={350}
-      ></canvas>
-      <div className="container_controller">
-        <fieldset className="legend">
-          <legend>legenda</legend>
-          {props.positions.map((item,index) => (
-            <label key={index}>
-              {" "}
-              {item.name}
-              <div
-                className="color_box"
-                style={{ "background": item.color }}
-              ></div>
-            </label>
-          ))}
-        </fieldset>
-        
+      <div className="graphic_area">
+        <canvas
+          id="graphic"
+          className="graphic"
+          width={1500}
+          height={350}
+        ></canvas>
+        <div className="container_controller">
+          <fieldset className="legend">
+            <legend>legenda</legend>
+            {props.positions.map((item, index) => (
+              <label key={index}>
+                {" "}
+                {item.name}
+                <div
+                  className="color_box"
+                  style={{ background: item.color }}
+                ></div>
+              </label>
+            ))}
+          </fieldset>
+        </div>
       </div>
-    </div>
     </>
   );
 }

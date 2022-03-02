@@ -1,20 +1,21 @@
-.operation_viewer,.view_status{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color:var(--fontColor);
-    font-weight: bold;
-    position: relative;
+.operation_viewer,
+.view_status {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: var(--fontColor);
+  font-weight: bold;
+  position: relative;
 }
-.view_status{
-    background-color: var(--homeBackground);
-    width: 100%;
+.view_status {
+  background-color: var(--homeBackground);
+  width: 100%;
 }
-.value_title{
-    font-size: 1em;
-    color: yellow;
+.value_title {
+  font-size: 1em;
+  color: yellow;
 }
-.value_result{
-    font-size: 0.8em;
+.value_result {
+  font-size: 0.8em;
 }
