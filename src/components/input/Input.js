@@ -4,6 +4,7 @@ export default function Input(props) {
   return (
     <>
       <input
+        name={props.inputName}
         id={props.inputName}
         type={props.type}
         className="input"
