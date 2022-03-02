@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import Graphic from "../../components/graphic/Graphic";
+import { Api } from "../../api/Api";
+import CreateGraphic from "../../components/createGraphic/CreateGraphic";
 import Modal from "../../components/modal/Modal";
 import Table from "../../components/table/Table";
 import Button from "../../components/button/Button";
@@ -10,6 +11,21 @@ export default function Home() {
     view: false,
     operation: false,
   });
+  const [dataValues,setDataValues] = useState();
+  const values = [
+    {
+      name: "value1",
+      color: "#ff0000",
+      values: [
+        [20, 1000],
+        [200, 0],
+        [280, 2000],
+        [300, 25],
+        [500, 100],
+        [700, 350],
+      ],
+    }
+  ];
   const registerShare = (event) => {
     event.preventDefault();
     setView({
@@ -34,10 +50,38 @@ export default function Home() {
       operation: false,
     });
   };
-  useEffect(() => {}, []);
+  const getOperationsForGraphic = async ()=>{
+    const graphicData = [];
+    const sharesResponse = await Api.GetRequest(Api.selectShareUrl());
+    const sharesResult = await sharesResponse.json();
+    sharesResult.forEach(async(share,index)=>{
+      graphicData.push(
+        {
+          name:share.name,
+          color:"#ffffff",
+          values:[]
+        }
+      );
+      const operationsResponse = await Api.GetRequest(Api.selectOperationByShareUrl(share.id));
+      const operationsResult = await operationsResponse.json();
+        operationsResult.forEach((operation)=>{
+          graphicData[index].values.push([
+            parseInt(operation.irValue),parseInt((new Date(operation.operationDate)).getMonth()+1)
+          ]);
+        })
+    });
+    console.log(graphicData);
+    console.log(values)
+    setDataValues(graphicData);
+  };
+  useEffect(() => {
+    getOperationsForGraphic();
+  }, []);
   return (
     <section className="page">
-      <Graphic />
+      {dataValues?
+      <CreateGraphic dataValues={values} />
+      :""}
       <Table />
       <Modal
         view={view.view}
