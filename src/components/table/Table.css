@@ -5,7 +5,7 @@
   align-items: center;
   margin: 0;
   padding: 0;
-  max-height: 37%;
+  height: 37%;
   width: 98%;
   margin-bottom: 1em;
   padding: 1%;
@@ -17,6 +17,7 @@
   min-height: auto;
   width: 100%;
   border-spacing: 1px;
+  color: var(--fontColor);
 }
 .table_title {
   position: sticky;
@@ -33,5 +34,5 @@
   padding: 0.02em;
 }
 tr {
-  background-color: rgba(0, 0, 0, 0.11);
+  background-color: rgba(0, 0, 0, 0.288);
 }
