@@ -1,3 +1,5 @@
+import { useState,useEffect } from "react";
+import { Api } from "../../api/Api";
 import Button from "../button/Button";
 import Input from "../input/Input";
 import Form from "../form/Form";
@@ -5,8 +7,43 @@ import Select from "../select/Select";
 import "./NewOperationForm.css";
 
 export default function NewOperationForm(props) {
-  const options = ["item 1", "item 2"];
-  const share = ["PTR4", "VALE5"];
+    const [shares, setShares] = useState([
+        {
+            id: 0,
+            name: "",
+            value: ""
+          }
+    ]);
+  const options = [
+    {
+      name: "compra",
+      value: "purchase",
+    },
+    {
+      name: "venda",
+      value: "sale",
+    },
+  ];
+  const getShares = async()=>{
+    let result = [];
+    const response = await Api.GetRequest(Api.selectShareUrl());
+    const res = await response.json();
+    res.forEach((item)=>{
+        result.push({
+            id:item.id,
+            name:item.name,
+            value:item.id
+        })
+    });
+    if(result.name===""){
+
+        props.cancel();
+    }
+    setShares(result);
+  }
+  useEffect(()=>{
+    getShares();
+  },[]);
   return (
     <>
       <Form>
@@ -17,7 +54,7 @@ export default function NewOperationForm(props) {
           name={"Data da Operação"}
         />
         <Select
-          options={share}
+          options={shares}
           name={"Ação a Fazer Nova Operação"}
           selectName="OperationType"
         />
