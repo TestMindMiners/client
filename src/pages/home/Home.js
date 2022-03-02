@@ -5,6 +5,7 @@ import Modal from "../../components/modal/Modal";
 import Table from "../../components/table/Table";
 import Button from "../../components/button/Button";
 import "./Home.css";
+import MessageBox from "../../components/messageBox/MessageBox";
 
 export default function Home() {
   const [dataValues, setDataValues] = useState();
@@ -36,15 +37,53 @@ export default function Home() {
     });
     return graphicValues;
   };
+
+  const verifyRange = (operations) => {
+    let leftValues = [];
+    let topValues = [];
+    
+    operations.forEach((element) => {
+        leftValues.push(element[0]);
+        topValues.push(element[1]);
+    });
+    
+    const highValues = [
+      Math.max.apply(null, leftValues),
+      Math.max.apply(null, topValues),
+    ];
+    const lowValues = [
+      Math.min.apply(null, leftValues),
+      Math.min.apply(null, topValues),
+    ];
+    const diferenceHighLow = [
+      highValues[0] - lowValues[0],
+      highValues[1] - lowValues[1],
+    ];
+    return diferenceHighLow;
+  };
+  const calculatePositions =  (operations) => {
+    const diferenceHighLow = verifyRange(operations);
+    const resultPositions = [];
+    operations.forEach((element) => {
+            resultPositions.push([
+                parseInt(((element[0]*100/diferenceHighLow[0]/2)*maxLeft/100)+minLeft/2),
+                parseInt(((100-(element[1]*100/diferenceHighLow[1]))*minTop)/100)
+            ]);
+        
+      });
+    return resultPositions;
+  };
+
   const getOperationsForGraphic = (share) => {
     const graphicData = [];
     share.forEach(async (item) => {
       const operationBySharePositions = await getOperationByShare(item);
+      let tempPositions = calculatePositions(operationBySharePositions);
       graphicData.push({
         name: item.name,
         color: "#ffffff",
         values: operationBySharePositions,
-        positions: operationBySharePositions
+        positions: tempPositions
       });
     });
     return graphicData;
@@ -78,13 +117,23 @@ export default function Home() {
     })
   };
 
+  const closeMessage = (event)=>{
+    event.preventDefault();
+    setDataValues(
+      {
+        ...dataValues,
+        message:null
+      }
+    )
+  };
+
   const getAll = async (showMessage) => {
-    let message = null;
+    let messageValue = null;
     let operations = await getOperations();
     let share = await getShare();
     let positions = await getOperationsForGraphic(share);
-    if(message){
-      message = showMessage;
+    if(showMessage){
+      messageValue = showMessage;
     }
     const tempDataValues = {
       ...dataValues,
@@ -95,9 +144,8 @@ export default function Home() {
         view: false,
         operation: false,
       },
-      message:message
+      message:messageValue
     };
-    console.log(tempDataValues.positions)
     setDataValues(tempDataValues);
   };
   useEffect(() => {
@@ -130,6 +178,11 @@ export default function Home() {
               click={openRegisterOperation}
             />
           </div>
+          {dataValues.message !== null?
+            <MessageBox action={closeMessage} message={dataValues.message}/>
+            :""}
+            
+            
         </section>
       ) : (
         ""

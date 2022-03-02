@@ -1,18 +1,8 @@
-import { useEffect } from "react";
-import Select from "../select/Select";
+import { useState,useEffect } from "react";
 import "./Graphic.css";
 
 export default function Graphic(props) {
-  const selectOptions = [
-    {
-      name: "Por Ano",
-      value: "year",
-    },
-    {
-      name: "Por Mês",
-      value: "month",
-    },
-  ];
+  const [positions,setPositions]=useState();
   const drawnArrows = (drawnArea) => {
     const arrowValues = [
       [
@@ -37,47 +27,55 @@ export default function Graphic(props) {
     });
   };
   const drawnLines = (drawnArea) => {
-    props.positions.forEach((item) => {
-      const haf = [];
-      const text = [];
-      drawnArea.beginPath();
-      drawnArea.strokeStyle = item.color;
-      drawnArea.moveTo(item.positions[0][0], item.positions[0][1]);
-      text.push({
-        value: item.values[0][0],
-        time: item.values[0][1],
-        x: item.positions[0][0],
-        y: item.positions[0][1] + 25,
-      });
-      item.positions.forEach((position, index) => {
-        drawnArea.lineTo(position[0], position[1]);
+    if(positions){
+      positions.forEach((item) => {
+        
+        const haf = [];
+        const text = [];
+        drawnArea.beginPath();
+        drawnArea.strokeStyle = item.color;
+        drawnArea.moveTo(item.positions[0][0], item.positions[0][1]);
         text.push({
-          value: item.values[index][0],
-          time: item.values[index][1],
-          x: position[0],
-          y: position[1] + 25,
+          value: item.values[0][0],
+          time: item.values[0][1],
+          x: item.positions[0][0],
+          y: item.positions[0][1] + 25,
         });
-        if (index === item.positions.length / 2) {
-          haf.push(position[0]);
-          haf.push(position[1]);
-        }
+        item.positions.forEach((position, index) => {
+          drawnArea.lineTo(position[0], position[1]);
+          text.push({
+            value: item.values[index][0],
+            time: item.values[index][1],
+            x: position[0],
+            y: position[1] + 25,
+          });
+          if (index === item.positions.length / 2) {
+            haf.push(position[0]);
+            haf.push(position[1]);
+          }
+        });
+        drawnArea.stroke();
+        text.forEach((text) => {
+          drawnArea.fillText(text.value, text.x, 320);
+          drawnArea.fillText(text.time, text.x, text.y - 30);
+          drawnArea.fillStyle = "#ffffff";
+        });
       });
-      drawnArea.stroke();
-      text.forEach((text) => {
-        drawnArea.fillText(text.value, text.x, 320);
-        drawnArea.fillText(text.time, text.x, text.y - 30);
-        drawnArea.fillStyle = "#ffffff";
-      });
-    });
+    }
   };
   useEffect(() => {
+    
+    const tempPositions = async()=>(await props.positions);
+    console.log(tempPositions().then(result=>result));
     const drawnArea = document.getElementById("graphic").getContext("2d");
+    setPositions(props.positions);
     drawnArea.translate(0, 20);
     drawnArea.fillStyle = "#ffffff";
     drawnArrows(drawnArea);
     drawnLines(drawnArea);
   }, []);
   return (
+    <>
     <div className="graphic_area">
       <canvas
         id="graphic"
@@ -99,8 +97,9 @@ export default function Graphic(props) {
             </label>
           ))}
         </fieldset>
-        <Select options={selectOptions} name={"Selecione o tipo de dado"}></Select>
+        
       </div>
     </div>
+    </>
   );
 }
