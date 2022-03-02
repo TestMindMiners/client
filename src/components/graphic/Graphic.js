@@ -71,7 +71,6 @@ export default function Graphic(props) {
     });
   };
   useEffect(() => {
-    console.log(props.positions)
     const drawnArea = document.getElementById("graphic").getContext("2d");
     drawnArea.translate(0, 20);
     drawnArea.fillStyle = "#ffffff";
