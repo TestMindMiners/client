@@ -8,7 +8,7 @@ export default function Modal(props) {
       {props.view ? (
         <article className="modal">
           {props.operation ? (
-            <NewOperationForm cancel={props.cancel} />
+            <NewOperationForm cancel={props.cancel} action={props.action} share={props.share}/>
           ) : (
             <NewShareForm cancel={props.cancel} />
           )}
