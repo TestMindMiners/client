@@ -24,7 +24,7 @@ export default function View(){
         getOperationDataValues();
     },[])
     return (
-        <section className='page'>
+        <section className='page view'>
         {operationData?
             <OperationViewer operationData={operationData}></OperationViewer>
             :
