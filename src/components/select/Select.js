@@ -9,8 +9,8 @@ export default function Select(props) {
       <select className="input select" id={props.selectName}>
         {props.options
           ? props.options.map((item, index) => (
-              <option value={item} key={index}>
-                {item}
+              <option value={item.value} key={index}>
+                {item.name}
               </option>
             ))
           : ""}
