@@ -34,6 +34,8 @@ export default function Table(props) {
               </td>
             </tr>
           ))}
+          
+          
         </tbody>
         :""}
       </table>
