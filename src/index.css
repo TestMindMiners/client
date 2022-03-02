@@ -1,13 +1,14 @@
 :root {
-  --normalBackground: #000000;
-  --dangerBackground: #fc4c4c;
-  --componentBackground: #ffffff;
-  --background: #f0f0f0;
-  --fontColor: #000000;
+  --normalBackground: #012E40;
+  --dangerBackground: #d82525;
+  --componentBackground: #012E40;
+  --background: #012E40;
+  --fontColor: #ffffff;
   --fontButtonColor: #ffffff;
   --marginDefault: 0.2em;
   --inputFormPadding: 0.5em;
   --elementShadow: rgba(24, 115, 175, 0.719);
+  --homeBackground:#025159;
 }
 body {
   margin: 0;
@@ -35,6 +36,7 @@ body,
   justify-content: flex-start;
   align-items: center;
   background-color: var(--background);
+  overflow: hidden;
 }
 
 /* custom scrollbar */
