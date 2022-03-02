@@ -1,4 +1,4 @@
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Api } from "../../api/Api";
 import Button from "../button/Button";
 import Input from "../input/Input";
@@ -7,13 +7,13 @@ import Select from "../select/Select";
 import "./NewOperationForm.css";
 
 export default function NewOperationForm(props) {
-    const [shares, setShares] = useState([
-        {
-            id: 0,
-            name: "",
-            value: ""
-          }
-    ]);
+  const [shares, setShares] = useState([
+    {
+      id: 0,
+      name: "",
+      value: "",
+    },
+  ]);
   const options = [
     {
       name: "compra",
@@ -24,29 +24,43 @@ export default function NewOperationForm(props) {
       value: "sale",
     },
   ];
-  const getShares = async()=>{
+  const getShares = async () => {
     let result = [];
-    const response = await Api.GetRequest(Api.selectShareUrl());
-    const res = await response.json();
-    res.forEach((item)=>{
-        result.push({
-            id:item.id,
-            name:item.name,
-            value:item.id
-        })
+    props.share.forEach((item) => {
+      result.push({
+        id: item.id,
+        name: item.name,
+        value: item.id,
+      });
     });
-    if(result.name===""){
-
-        props.cancel();
+    if (result.name === "") {
+      props.cancel();
     }
     setShares(result);
-  }
-  useEffect(()=>{
+  };
+  const saveOperation = async (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const operationValues = {
+      operationDate: new Date(form.dateOperation.value),
+      operationType: form.operationType.value,
+      SHAREId: parseInt(form.shareOperation.value),
+      operationPrice: parseFloat(form.sharePrice.value),
+      operationQuantity: parseFloat(form.shareQuantity.value),
+      brockerageFee: parseFloat(form.brokerageFee.value),
+    };
+    await Api.PostRequest(Api.createOperationUrl(), operationValues)
+      .catch((error) => console.log(error))
+      .then((result) => {if(result.status===200){props.action("O registro foi concluido com sucesso!")}});
+  };
+  useEffect(() => {
     getShares();
-  },[]);
+  }, []);
   return (
     <>
-      <Form>
+      {shares?
+      <Form submit={saveOperation}>
+
         <label className="form_title">{"Nova Operação"}</label>
         <Input
           type="date"
@@ -56,24 +70,25 @@ export default function NewOperationForm(props) {
         <Select
           options={shares}
           name={"Ação a Fazer Nova Operação"}
-          selectName="OperationType"
+          selectName="shareOperation"
         />
         <Select
           options={options}
           name={"Tipo de Operação"}
-          selectName="OperationType"
+          selectName="operationType"
         />
-        <Input type="number" inputName={"sharePrice"} name={"Preço da Ação"} />
+        <Input type="text" inputName={"sharePrice"} name={"Preço da Ação"} />
         <Input
-          type="number"
+          type="text"
           inputName={"shareQuantity"}
           name={"Quantidade de Ações"}
         />
         <Input
-          type="number"
+          type="text"
           inputName={"brokerageFee"}
           name={"Taxa de Corretagem"}
         />
+        
         <Button buttonText={"Salvar Operação"} buttonName={"normal_button"} />
         <Button
           buttonText={"Cancelar Operação"}
@@ -81,6 +96,7 @@ export default function NewOperationForm(props) {
           click={props.cancel}
         />
       </Form>
+      :""}
     </>
   );
 }
