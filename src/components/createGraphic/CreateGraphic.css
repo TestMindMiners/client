@@ -1,0 +1,13 @@
+.graphic_box{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 45%;
+    margin: 0;
+    padding: 0;
+    box-shadow: 0 0 1px 0.5px #00395C;
+    margin-bottom: 1em;
+    margin-top: 0.5em;
+}
