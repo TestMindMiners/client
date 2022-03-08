@@ -10,7 +10,7 @@ react : 17.0.2
 react-router-dom: 6.2.1
 ````
 
-## To use this project you need:
+## To use this project, you need:
 
 ### Install node 16.14.0:
 
@@ -25,13 +25,13 @@ react-router-dom: 6.2.1
     git clone https://github.com/TestMindMiners/client
 ```
 
-### Open the terminal inside of this cloned folder and run:
+### Open the terminal inside this cloned folder and run:
 
 ```
     npm install
 ```
 
-### To run this project you can use:
+### To run this project, you can use:
 
 ```
     npm run start
