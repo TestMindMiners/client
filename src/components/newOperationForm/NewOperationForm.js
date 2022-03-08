@@ -7,13 +7,7 @@ import Select from "../select/Select";
 import "./NewOperationForm.css";
 
 export default function NewOperationForm(props) {
-  const [shares, setShares] = useState([
-    {
-      id: 0,
-      name: "",
-      value: "",
-    },
-  ]);
+  const [shares, setShares] = useState();
   const options = [
     {
       name: "compra",
@@ -36,7 +30,9 @@ export default function NewOperationForm(props) {
     if (result.name === "") {
       props.cancel();
     }
-    setShares(result);
+    if(result.length!==0){
+      setShares(result);
+    }
   };
   const saveOperation = async (event) => {
     event.preventDefault();
@@ -58,11 +54,13 @@ export default function NewOperationForm(props) {
       });
   };
   useEffect(() => {
-    getShares();
-  }, []);
+    if(!shares){
+      getShares();
+    }
+  });
   return (
     <>
-      {shares ? (
+      {props.share.length !==0 ? (
         <Form submit={saveOperation}>
           <label className="form_title">{"Nova Operação"}</label>
           <Input
@@ -100,7 +98,7 @@ export default function NewOperationForm(props) {
           />
         </Form>
       ) : (
-        ""
+        props.action("Você não possui ações cadastradas. Cadastre uma antes de criar uma operação!")
       )}
     </>
   );
