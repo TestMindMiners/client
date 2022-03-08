@@ -1,20 +1,65 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import "./Graphic.css";
 
 export default function Graphic(props) {
-  const [positions, setPositions] = useState();
+  const [minTop, minLeft, maxTop, maxLeft] = [300, 40, 0, 1500];
+
+  const verifyRange = (operationsByShare) => {
+    let operationsMaxTime = 0;
+    let operationsMaxIr = 0;
+
+    operationsByShare.forEach((shareData) => {
+      if (shareData.operationsValues !== undefined) {
+        let max = Math.max.apply(null, shareData.operationsValues.dateValues);
+        if (max > operationsMaxTime) {
+          operationsMaxTime = max;
+        }
+
+        max = Math.max.apply(null, shareData.operationsValues.irValues);
+        if (max > operationsMaxIr) {
+          operationsMaxIr = max;
+        }
+      }
+    });
+    return [operationsMaxTime, operationsMaxIr];
+  };
+
+  const calculatePositions = () => {
+    const shares = props.graphicData.data;
+    const range = verifyRange(shares);
+    const resultPositions = [];
+    shares.forEach((share, index) => {
+      const positionsTemp = {
+        name: share.name,
+        positions: [],
+        values: [],
+      };
+      let percentage = 0;
+      if (share.operationsValues !== undefined) {
+        share.operationsValues.dateValues.forEach((date) => {
+          percentage =
+            ((((100 * date) / 12) * (maxLeft - minLeft)) / 100)-minLeft;
+          positionsTemp.positions.push([percentage]);
+          positionsTemp.values.push([date]);
+        });
+        share.operationsValues.irValues.forEach((irValue, index) => {
+          percentage =
+            minTop -
+            ((((100 * irValue) / range[1]) * (minTop - maxTop)) / 100 + maxTop);
+
+          positionsTemp.positions[index].push(percentage);
+          positionsTemp.values[index].push(irValue);
+        });
+        resultPositions.push(positionsTemp);
+      }
+    });
+    return resultPositions;
+  };
+
   const drawnArrows = (drawnArea) => {
     const arrowValues = [
-      [
-        props.minLeft,
-        props.minTop,
-        props.maxLeft,
-        props.minTop,
-        "year",
-        props.maxLeft - 60,
-        295,
-      ],
-      [props.minLeft, props.maxTop, props.minLeft, props.minTop, "IR", 0, 20],
+      [minLeft, minTop, maxLeft, minTop, "Month", maxLeft - 60, 295],
+      [minLeft, maxTop, minLeft, minTop, "IR", 0, 20],
     ];
     arrowValues.forEach((arrowValue) => {
       drawnArea.strokeStyle = "#ffffff";
@@ -26,13 +71,14 @@ export default function Graphic(props) {
       drawnArea.fillStyle = "#ffffff";
     });
   };
-  const drawnLines = (drawnArea) => {
-    if (positions) {
-      positions.forEach((item) => {
-        const haf = [];
-        const text = [];
-        drawnArea.beginPath();
-        drawnArea.strokeStyle = item.color;
+
+  const drawnLines = (drawnArea, shares) => {
+    shares.forEach((item) => {
+      const haf = [];
+      const text = [];
+      drawnArea.beginPath();
+      drawnArea.strokeStyle = item.color;
+      if (item.positions.length !== 0) {
         drawnArea.moveTo(item.positions[0][0], item.positions[0][1]);
         text.push({
           value: item.values[0][0],
@@ -59,44 +105,39 @@ export default function Graphic(props) {
           drawnArea.fillText(text.time, text.x, text.y - 30);
           drawnArea.fillStyle = "#ffffff";
         });
-      });
-    }
+      }
+    });
   };
+
   useEffect(() => {
-    const tempPositions = async () => await props.positions;
-    console.log(tempPositions().then((result) => result));
     const drawnArea = document.getElementById("graphic").getContext("2d");
-    setPositions(props.positions);
     drawnArea.translate(0, 20);
     drawnArea.fillStyle = "#ffffff";
     drawnArrows(drawnArea);
-    drawnLines(drawnArea);
+    drawnLines(drawnArea, calculatePositions());
   }, []);
   return (
-    <>
-      <div className="graphic_area">
-        <canvas
-          id="graphic"
-          className="graphic"
-          width={1500}
-          height={350}
-        ></canvas>
-        <div className="container_controller">
-          <fieldset className="legend">
-            <legend>legenda</legend>
-            {props.positions.map((item, index) => (
-              <label key={index}>
-                {" "}
-                {item.name}
-                <div
-                  className="color_box"
-                  style={{ background: item.color }}
-                ></div>
-              </label>
-            ))}
-          </fieldset>
-        </div>
+    <div className="graphic_area">
+      <canvas
+        id="graphic"
+        className="graphic"
+        width={1500}
+        height={350}
+      ></canvas>
+      <div className="container_controller">
+        <fieldset className="legend">
+          <legend>legenda</legend>
+          {props.graphicData.data.map((item, index) => (
+            <label key={index}>
+              {item.name}
+              <div
+                className="color_box"
+                style={{ background: item.color }}
+              ></div>
+            </label>
+          ))}
+        </fieldset>
       </div>
-    </>
+    </div>
   );
 }
