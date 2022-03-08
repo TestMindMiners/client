@@ -1,5 +1,5 @@
 export const Api = {
-  baseUrl: "http://localhost:3001/",
+  baseUrl: "https://mindminerstestserver.herokuapp.com/",
 
   selectShareUrl: () => Api.baseUrl + "share/",
   selectShareByIdUrl: (id) => Api.baseUrl + "share/" + id,
