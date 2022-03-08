@@ -9,6 +9,7 @@ export default function Input(props) {
         type={props.type}
         className="input"
         placeholder={props.name}
+        required={props.required}
       ></input>
     </>
   );

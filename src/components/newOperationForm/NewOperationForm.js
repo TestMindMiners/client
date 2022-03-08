@@ -30,7 +30,7 @@ export default function NewOperationForm(props) {
     if (result.name === "") {
       props.cancel();
     }
-    if(result.length!==0){
+    if (result.length !== 0) {
       setShares(result);
     }
   };
@@ -54,19 +54,20 @@ export default function NewOperationForm(props) {
       });
   };
   useEffect(() => {
-    if(!shares){
+    if (!shares) {
       getShares();
     }
   });
   return (
     <>
-      {props.share.length !==0 ? (
+      {props.share.length !== 0 ? (
         <Form submit={saveOperation}>
           <label className="form_title">{"Nova Operação"}</label>
           <Input
             type="date"
             inputName={"dateOperation"}
             name={"Data da Operação"}
+            required="true"
           />
           <Select
             options={shares}
@@ -83,11 +84,13 @@ export default function NewOperationForm(props) {
             type="text"
             inputName={"shareQuantity"}
             name={"Quantidade de Ações"}
+            required="true"
           />
           <Input
             type="text"
             inputName={"brokerageFee"}
             name={"Taxa de Corretagem"}
+            required="true"
           />
 
           <Button buttonText={"Salvar Operação"} buttonName={"normal_button"} />
@@ -98,7 +101,9 @@ export default function NewOperationForm(props) {
           />
         </Form>
       ) : (
-        props.action("Você não possui ações cadastradas. Cadastre uma antes de criar uma operação!")
+        props.action(
+          "Você não possui ações cadastradas. Cadastre uma antes de criar uma operação!"
+        )
       )}
     </>
   );
