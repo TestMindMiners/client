@@ -9,12 +9,12 @@ export default function Table(props) {
   const getOperations = async () => {
     const response = await Api.GetRequest(Api.selectOperationUrl());
     const operationsList = await response.json();
-    setDataOperations(operationsList)
+    setDataOperations(operationsList);
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     getOperations();
-  },[]);
+  }, []);
 
   return (
     <>
@@ -48,9 +48,7 @@ export default function Table(props) {
                   </tr>
                 ))}
               </tbody>
-            ) : (
-              null
-            )}
+            ) : null}
           </table>
         </article>
       ) : (

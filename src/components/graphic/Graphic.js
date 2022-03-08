@@ -38,7 +38,7 @@ export default function Graphic(props) {
       if (share.operationsValues !== undefined) {
         share.operationsValues.dateValues.forEach((date) => {
           percentage =
-            ((((100 * date) / 12) * (maxLeft - minLeft)) / 100)-minLeft;
+            (((100 * date) / 12) * (maxLeft - minLeft)) / 100 - minLeft;
           positionsTemp.positions.push([percentage]);
           positionsTemp.values.push([date]);
         });

@@ -74,14 +74,14 @@ export default function Home() {
   };
   useEffect(() => {
     getAll();
-  },[]);
+  }, []);
   return (
     <>
       {dataValues ? (
         <section className="page">
-          <CreateGraphic share={dataValues.share}/>
+          <CreateGraphic share={dataValues.share} />
 
-          <Table/>
+          <Table />
 
           <Modal
             view={dataValues.view.view}

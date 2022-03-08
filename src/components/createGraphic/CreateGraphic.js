@@ -8,38 +8,40 @@ export default function CreateGraphic(props) {
 
   const getOperationByShare = () => {
     const graphicDataTemp = [];
-    if(props.share){
-    props.share.forEach(async (item, index) => {
-      await Api.GetRequest(Api.selectOperationByShareUrl(item.id)).then(
-        async (response) => {
-          const operationShareResponse = await response.json();
+    if (props.share) {
+      props.share.forEach(async (item, index) => {
+        await Api.GetRequest(Api.selectOperationByShareUrl(item.id)).then(
+          async (response) => {
+            const operationShareResponse = await response.json();
 
-          if (operationShareResponse.lenght !== 0) {
-            const dateValues = [];
-            const irValues = [];
+            if (operationShareResponse.lenght !== 0) {
+              const dateValues = [];
+              const irValues = [];
 
-            operationShareResponse.forEach((operation) => {
-              dateValues.push(new Date(operation.operationDate).getMonth() + 1);
-              irValues.push(operation.irValue);
-            });
+              operationShareResponse.forEach((operation) => {
+                dateValues.push(
+                  new Date(operation.operationDate).getMonth() + 1
+                );
+                irValues.push(operation.irValue);
+              });
 
-            graphicDataTemp.push({
-              name: item.name,
-              operationsValues: {                
-                irValues: irValues,
-                dateValues: dateValues
-              }
-            });
+              graphicDataTemp.push({
+                name: item.name,
+                operationsValues: {
+                  irValues: irValues,
+                  dateValues: dateValues,
+                },
+              });
 
-            setGraphicData({
-              ...graphicData,
-              data: graphicDataTemp,
-            });
+              setGraphicData({
+                ...graphicData,
+                data: graphicDataTemp,
+              });
+            }
           }
-        }
-      );
-    });
-  }
+        );
+      });
+    }
   };
 
   useEffect(() => {
