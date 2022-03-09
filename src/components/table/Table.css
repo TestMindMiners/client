@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: center;
+  align-items: flex-start;
   margin: 0;
   padding: 0;
   height: 37%;
@@ -35,4 +35,54 @@
 }
 tr {
   background-color: rgba(0, 0, 0, 0.288);
+}
+@media screen and (min-width: 0px) {
+  .table_title tr th {
+    font-size: 1em;
+    padding: 0.5em;
+  }
+  .table_data tr {
+    font-size: 0.8em;
+    padding: 0.02em;
+  }
+}
+@media screen and (min-width: 480px) {
+  .table_title tr th {
+    font-size: 1em;
+    padding: 0.5em;
+  }
+  .table_data tr {
+    font-size: 1em;
+    padding: 0.02em;
+  }
+}
+@media screen and (min-width: 768px) {
+  .table_title tr th {
+    font-size: 1.1em;
+    padding: 0.5em;
+  }
+  .table_data tr {
+    font-size: 1em;
+    padding: 0.02em;
+  }
+}
+@media screen and (min-width: 1024px) {
+  .table_title tr th {
+    font-size: 1.2em;
+    padding: 0.5em;
+  }
+  .table_data tr {
+    font-size: 1.2em;
+    padding: 0.02em;
+  }
+}
+@media screen and (min-width: 1300px) {
+  .table_title tr th {
+    font-size: 1.3em;
+    padding: 0.5em;
+  }
+  .table_data tr {
+    font-size: 1.2em;
+    padding: 0.02em;
+  }
 }

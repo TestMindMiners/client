@@ -18,3 +18,23 @@
 .button_group button {
   width: 25%;
 }
+@media screen and (min-width: 0px) {
+  .button_group button {
+    width: 50%;
+  }
+}
+@media screen and (min-width: 480px) {
+  .button_group button {
+    width: 40%;
+  }
+}
+@media screen and (min-width: 768px) {
+  .button_group button {
+    width: 30%;
+  }
+}
+@media screen and (min-width: 1024px) {
+  .button_group button {
+    width: 25%;
+  }
+}

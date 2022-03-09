@@ -11,3 +11,27 @@
   margin-bottom: 1em;
   margin-top: 0.5em;
 }
+@media screen and (min-width: 0px) {
+  .graphic_box {
+    width: 100%;
+    height: 32%;
+  }
+}
+@media screen and (min-width: 480px) {
+  .graphic_box {
+    width: 100%;
+    height: 30%;
+  }
+}
+@media screen and (min-width: 768px) {
+  .graphic_box {
+    width: 100%;
+    height: 35%;
+  }
+}
+@media screen and (min-width: 1024px) {
+  .graphic_box {
+    width: 100%;
+    height: 45%;
+  }
+}
