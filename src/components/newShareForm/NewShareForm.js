@@ -23,7 +23,7 @@ export default function NewShareForm(props) {
     <>
       <Form submit={saveShare}>
         <label className="form_title">{"Registrar Nova Ação"}</label>
-        <Input type="text" inputName={"shareName"} name={"Nome da ação"} required="true" />
+        <Input type="text" inputName={"shareName"} name={"Nome da ação"} required={true} />
         <Button buttonText={"Salvar Registro"} buttonName={"normal_button"} />
         <Button
           buttonText={"Cancelar Registro"}

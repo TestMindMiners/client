@@ -67,7 +67,7 @@ export default function NewOperationForm(props) {
             type="date"
             inputName={"dateOperation"}
             name={"Data da Operação"}
-            required="true"
+            required={true}
           />
           <Select
             options={shares}
@@ -84,13 +84,13 @@ export default function NewOperationForm(props) {
             type="text"
             inputName={"shareQuantity"}
             name={"Quantidade de Ações"}
-            required="true"
+            required={true}
           />
           <Input
             type="text"
             inputName={"brokerageFee"}
             name={"Taxa de Corretagem"}
-            required="true"
+            required={true}
           />
 
           <Button buttonText={"Salvar Operação"} buttonName={"normal_button"} />
