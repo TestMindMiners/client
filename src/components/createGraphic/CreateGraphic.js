@@ -52,11 +52,7 @@ export default function CreateGraphic(props) {
 
   return (
     <div className="graphic_box">
-      {graphicData ? (
-        graphicData != [] ? (
           <Graphic graphicData={graphicData} ></Graphic>
-        ) : null
-      ) : null}
     </div>
   );
 }

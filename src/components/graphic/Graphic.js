@@ -117,7 +117,9 @@ export default function Graphic(props) {
     canvas.width =canvas.width;
     drawnArea.translate(0, 20);
     drawnArrows(drawnArea);
+    if(!!props.graphicData){
     drawnLines(drawnArea, calculatePositions());
+    }
   });
   return (
     <div className="graphic_area">
@@ -131,7 +133,8 @@ export default function Graphic(props) {
       <div className="container_controller">
         <fieldset className="legend">
           <legend>legenda</legend>
-          {props.graphicData.data.map((item, index) => (
+          {props.graphicData&&props.graphicData.data?
+          props.graphicData.data.map((item, index) => (
             <label key={index}>
               {item.name}
               <div
@@ -139,7 +142,7 @@ export default function Graphic(props) {
                 style={{ background: item.color }}
               ></div>
             </label>
-          ))}
+          )):null}
         </fieldset>
       </div>
     </div>
