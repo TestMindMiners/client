@@ -48,13 +48,13 @@ export default function CreateGraphic(props) {
     if (!graphicData) {
       getOperationByShare();
     }
-  }, []);
+  },[]);
 
   return (
     <div className="graphic_box">
       {graphicData ? (
         graphicData != [] ? (
-          <Graphic graphicData={graphicData}></Graphic>
+          <Graphic graphicData={graphicData} ></Graphic>
         ) : null
       ) : null}
     </div>

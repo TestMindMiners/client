@@ -110,14 +110,17 @@ export default function Graphic(props) {
   };
 
   useEffect(() => {
-    const drawnArea = document.getElementById("graphic").getContext("2d");
+    const canvas = document.getElementById("graphic");
+    const drawnArea = canvas.getContext("2d");
+    canvas.width =canvas.width;
     drawnArea.translate(0, 20);
     drawnArea.fillStyle = "#ffffff";
     drawnArrows(drawnArea);
     drawnLines(drawnArea, calculatePositions());
-  }, []);
+  });
   return (
     <div className="graphic_area">
+      
       <canvas
         id="graphic"
         className="graphic"
