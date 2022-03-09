@@ -74,10 +74,11 @@ export default function Graphic(props) {
 
   const drawnLines = (drawnArea, shares) => {
     shares.forEach((item) => {
+      let lineColor = "#"+Math.floor(Math.random()*16777215).toString(16);
       const haf = [];
       const text = [];
       drawnArea.beginPath();
-      drawnArea.strokeStyle = item.color;
+      drawnArea.strokeStyle = lineColor;
       if (item.positions.length !== 0) {
         drawnArea.moveTo(item.positions[0][0], item.positions[0][1]);
         text.push({
@@ -103,10 +104,11 @@ export default function Graphic(props) {
         text.forEach((text) => {
           drawnArea.fillText(text.value, text.x, 320);
           drawnArea.fillText(text.time, text.x, text.y - 30);
-          drawnArea.fillStyle = "#ffffff";
+          drawnArea.fillStyle = lineColor; 
         });
       }
     });
+    drawnArea.beginPath();
   };
 
   useEffect(() => {
@@ -114,7 +116,6 @@ export default function Graphic(props) {
     const drawnArea = canvas.getContext("2d");
     canvas.width =canvas.width;
     drawnArea.translate(0, 20);
-    drawnArea.fillStyle = "#ffffff";
     drawnArrows(drawnArea);
     drawnLines(drawnArea, calculatePositions());
   });
