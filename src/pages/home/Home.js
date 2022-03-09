@@ -81,7 +81,7 @@ export default function Home() {
         <section className="page">
           <CreateGraphic share={dataValues.share} />
 
-          <Table />
+          <Table view={dataValues.view.view}/>
 
           <Modal
             view={dataValues.view.view}

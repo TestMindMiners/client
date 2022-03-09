@@ -14,7 +14,7 @@ export default function Table(props) {
 
   useEffect(() => {
     getOperations();
-  }, []);
+  },[props.view]);
 
   return (
     <>
