@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import "bootstrap-icons/font/bootstrap-icons.css";
 import { Link } from "react-router-dom";
 import { Api } from "../../api/Api";
 import "./Table.css";
@@ -7,14 +8,14 @@ export default function Table(props) {
   const [dataOperations, setDataOperations] = useState();
 
   const getOperations = async () => {
-    const response = await Api.GetRequest(Api.selectOperationUrl());
+    const response = await Api.GetRequest(Api.selectOperationUrl(props.year));
     const operationsList = await response.json();
     setDataOperations(operationsList);
   };
 
   useEffect(() => {
     getOperations();
-  },[props.view]);
+  }, [props.view, props.year]);
 
   return (
     <>
@@ -43,7 +44,11 @@ export default function Table(props) {
                     <td>{item.operationQuantity}</td>
                     <td>{item.brockerageFee}</td>
                     <td>
-                      <Link to={`/view/${item.id}`}>view</Link>
+                      <Link to={`/view/${item.id}`}>
+                        <i className={"bi bi-card-text"}>
+                          <span className="span-legend">Visualizar operação</span>
+                        </i>
+                      </Link>
                     </td>
                   </tr>
                 ))}

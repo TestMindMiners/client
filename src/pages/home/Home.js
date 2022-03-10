@@ -4,6 +4,7 @@ import CreateGraphic from "../../components/createGraphic/CreateGraphic";
 import Modal from "../../components/modal/Modal";
 import Table from "../../components/table/Table";
 import Button from "../../components/button/Button";
+import Select from "../../components/select/Select";
 import "./Home.css";
 import MessageBox from "../../components/messageBox/MessageBox";
 
@@ -14,6 +15,12 @@ export default function Home() {
     const response = await Api.GetRequest(Api.selectShareUrl());
     const shareList = await response.json();
     return shareList;
+  };
+
+  const getYears = async () => {
+    const response = await Api.GetRequest(Api.selectOperationYearsUrl());
+    const yearsList = await response.json();
+    return yearsList;
   };
 
   const cancelRegister = (event) => {
@@ -48,15 +55,37 @@ export default function Home() {
   };
 
   const closeMessage = (event) => {
-    event.preventDefault();
+    if (event) {
+      event.preventDefault();
+    }
     setDataValues({
       ...dataValues,
       message: null,
     });
   };
 
+  const selectYear = (event) => {
+    event.preventDefault();
+    const selectedYear = event.target.value;
+    console.log(selectedYear);
+    if (!dataValues) {
+      setDataValues({
+        ...dataValues,
+        selectedYear: selectedYear,
+      });
+    } else {
+      if (dataValues.selectedYear !== selectedYear) {
+        setDataValues({
+          ...dataValues,
+          selectedYear: selectedYear,
+        });
+      }
+    }
+  };
+
   const getAll = async (showMessage) => {
     let messageValue = null;
+    let yearsList = await getYears();
     let share = await getShare();
     if (showMessage) {
       messageValue = showMessage;
@@ -68,6 +97,8 @@ export default function Home() {
         view: false,
         operation: false,
       },
+      selectedYear: new Date().getFullYear(),
+      yearsList: yearsList,
       message: messageValue,
     };
     setDataValues(tempDataValues);
@@ -79,9 +110,19 @@ export default function Home() {
     <>
       {dataValues ? (
         <section className="page">
-          <CreateGraphic share={dataValues.share} />
+          <Select
+            className={"year_select"}
+            selectName={"selectYear"}
+            action={selectYear}
+            name={"Selecione o Ano"}
+            options={dataValues.yearsList ? dataValues.yearsList : null}
+          ></Select>
+          <CreateGraphic
+            share={dataValues.share}
+            year={dataValues.selectedYear}
+          />
 
-          <Table view={dataValues.view.view}/>
+          <Table view={dataValues.view.view} year={dataValues.selectedYear} />
 
           <Modal
             view={dataValues.view.view}

@@ -5,10 +5,11 @@ export const Api = {
   selectShareByIdUrl: (id) => Api.baseUrl + "share/" + id,
   createShareUrl: () => Api.baseUrl + "share/",
 
-  selectOperationUrl: () => Api.baseUrl + "operation/",
+  selectOperationUrl: (year) => Api.baseUrl + "operation/all/"+year,
   selectOperationByTypeUrl: (type) => Api.baseUrl + "operation/type/" + type,
-  selectOperationByShareUrl:(shareId) =>Api.baseUrl + "operation/share/" + shareId,
+  selectOperationByShareUrl:(shareId,year) =>Api.baseUrl + "operation/share/" + shareId +"/"+ year,
   selectOperationByIdUrl: (id) => Api.baseUrl + "operation/" + id,
+  selectOperationYearsUrl: ()=> Api.baseUrl + "operation/dates/years",
   createOperationUrl: () => Api.baseUrl + "operation/",
 
 
