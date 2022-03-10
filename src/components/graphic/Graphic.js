@@ -73,8 +73,10 @@ export default function Graphic(props) {
   };
 
   const drawnLines = (drawnArea, shares) => {
-    shares.forEach((item) => {
-      let lineColor = "#"+Math.floor(Math.random()*16777215).toString(16);
+    shares.forEach((item, index) => {
+      const boxColor = document.getElementById(index);
+      let lineColor = "#" + Math.floor(Math.random() * 16777215).toString(16);
+      boxColor.style.backgroundColor = lineColor;
       const haf = [];
       const text = [];
       drawnArea.beginPath();
@@ -104,7 +106,7 @@ export default function Graphic(props) {
         text.forEach((text) => {
           drawnArea.fillText(text.value, text.x, 320);
           drawnArea.fillText(text.time, text.x, text.y - 30);
-          drawnArea.fillStyle = lineColor; 
+          drawnArea.fillStyle = lineColor;
         });
       }
     });
@@ -114,16 +116,18 @@ export default function Graphic(props) {
   useEffect(() => {
     const canvas = document.getElementById("graphic");
     const drawnArea = canvas.getContext("2d");
-    canvas.width =canvas.width;
+    drawnArea.save();
+    drawnArea.setTransform(1, 0, 0, 1, 0, 0);
+    drawnArea.clearRect(0, 0, canvas.width, canvas.height);
+    canvas.width = canvas.width;
     drawnArea.translate(0, 20);
     drawnArrows(drawnArea);
-    if(!!props.graphicData){
-    drawnLines(drawnArea, calculatePositions());
+    if (!!props.graphicData) {
+      drawnLines(drawnArea, calculatePositions());
     }
   });
   return (
     <div className="graphic_area">
-      
       <canvas
         id="graphic"
         className="graphic"
@@ -133,16 +137,14 @@ export default function Graphic(props) {
       <div className="container_controller">
         <fieldset className="legend">
           <legend>legenda</legend>
-          {props.graphicData&&props.graphicData.data?
-          props.graphicData.data.map((item, index) => (
-            <label key={index}>
-              {item.name}
-              <div
-                className="color_box"
-                style={{ background: item.color }}
-              ></div>
-            </label>
-          )):null}
+          {props.graphicData && props.graphicData.data
+            ? props.graphicData.data.map((item, index) => (
+                <label key={index}>
+                  {item.name}
+                  <div id={index} className="color_box"></div>
+                </label>
+              ))
+            : null}
         </fieldset>
       </div>
     </div>
