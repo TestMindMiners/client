@@ -36,6 +36,24 @@
 tr {
   background-color: rgba(0, 0, 0, 0.288);
 }
+.bi-card-text {
+  color: white;
+}
+.bi-card-text:hover {
+  color: greenyellow;
+}
+.span-legend {
+  display: none;
+  background-color: rgba(0, 0, 0, 0.753);
+  padding: 0.5em;
+  border-radius: 5px;
+}
+.bi-card-text:hover > .span-legend {
+  display: block;
+  position: absolute;
+  z-index: 2;
+  transform: translateY(-150%);
+}
 @media screen and (min-width: 0px) {
   .table_title tr th {
     font-size: 1em;

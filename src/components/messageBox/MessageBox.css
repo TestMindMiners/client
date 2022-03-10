@@ -4,7 +4,6 @@
   top: 1em;
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   width: 25%;
@@ -15,5 +14,10 @@
   color: var(--fontColor);
 }
 .close_btn {
+  border: 0.1em solid white;
+  width: 2.5em;
+  height: 1.5em;
+  font-weight: bolder;
+  align-self: flex-start;
   cursor: pointer;
 }
