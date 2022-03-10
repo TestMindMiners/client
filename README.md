@@ -8,6 +8,7 @@
 node : 16.14.0
 react : 17.0.2
 react-router-dom: 6.2.1
+bootstrap-icons: 1.8.1
 ````
 
 ## To use this project, you need:
